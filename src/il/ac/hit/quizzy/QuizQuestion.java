@@ -4,24 +4,61 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class QuizQuestion implements IQuizQuestion {
+    private String title;
     private String question;
     private List<IQuizAnswer> answers = new ArrayList<>();
 
-    public QuizQuestion(String question) {
-        this.question = question;
+    // Protected constructor
+    protected QuizQuestion() {
+        // Initialize any default values or perform setup here
     }
 
-    @Override
-    public String askQuestion() {
+    public String getTitle() {
+        return title;
+    }
+
+    public String getQuestion() {
         return question;
     }
 
-    @Override
-    public List<IQuizAnswer> getAnswers() {
-        return answers;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public void addAnswer(IQuizAnswer answer) {
-        answers.add(answer);
+    public void setQuestion(String question) {
+        this.question = question;
+    }
+
+    // Nested Builder class
+    public static class Builder implements IQuizQuestionBuilder {
+        private QuizQuestion questionToBuild;
+
+        public Builder() {
+            questionToBuild = new QuizQuestion();
+        }
+
+        @Override
+        public IQuizQuestionBuilder setTitle(String text) {
+            questionToBuild.title = text;
+            return this;
+        }
+
+        @Override
+        public IQuizQuestionBuilder setQuestion(String text) {
+            questionToBuild.question = text;
+            return this;
+        }
+
+        @Override
+        public IQuizQuestionBuilder addAnswer(String text, boolean correct) {
+            IQuizAnswer answer = new QuizAnswer(text, correct);
+            questionToBuild.answers.add(answer);
+            return this;
+        }
+
+        @Override
+        public IQuizQuestion create() {
+            return questionToBuild;
+        }
     }
 }
