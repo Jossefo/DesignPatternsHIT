@@ -8,10 +8,6 @@ public class QuizQuestion implements IQuizQuestion {
     private String question;
     private List<IQuizAnswer> answers = new ArrayList<>();
 
-    // Protected constructor
-    protected QuizQuestion() {
-        // Initialize any default values or perform setup here
-    }
 
     public String getTitle() {
         return title;
@@ -27,6 +23,23 @@ public class QuizQuestion implements IQuizQuestion {
 
     public void setQuestion(String question) {
         this.question = question;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("Title: ").append(title).append("\n");
+        builder.append("Question: ").append(question).append("\n");
+        builder.append("Answers:\n");
+        for (IQuizAnswer answer : answers) {
+            builder.append(answer.getAnswer()).append(" (Correct: ").append(answer.isCorrect()).append(")\n");
+        }
+        return builder.toString();
+    }
+
+    @Override
+    public List<IQuizAnswer> getAnswers() {
+        return answers;
     }
 
     // Nested Builder class

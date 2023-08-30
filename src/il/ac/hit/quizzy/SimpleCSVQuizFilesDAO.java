@@ -25,7 +25,7 @@ public class SimpleCSVQuizFilesDAO implements IQuizFilesDAO{
             writer.println(quiz.getName()); // save quiz name
 
             for (IQuizQuestion question : quiz.getQuestions()){
-                writer.println(question.askQuestion()); // save questions
+                writer.println(question.toString()); // save questions
             }
         } catch (IOException e) {
             throw new QuizException("Saving quiz to file - Failed !!",e);
