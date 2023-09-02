@@ -31,4 +31,11 @@ public class GUIQuiz implements IQuiz {
     public List<IQuizQuestion> getQuestions() {
         return questions;
     }
+    @Override
+    public IQuiz clone() throws CloneNotSupportedException {
+        GUIQuiz clonedQuiz = (GUIQuiz) super.clone();
+        // Выполните клонирование для всех неизменяемых полей, если такие есть
+        clonedQuiz.questions = new ArrayList<>(this.questions);
+        return clonedQuiz;
+    }
 }
