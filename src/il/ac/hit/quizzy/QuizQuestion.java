@@ -8,6 +8,10 @@ public class QuizQuestion implements IQuizQuestion {
     private String question;
     private List<IQuizAnswer> answers = new ArrayList<>();
 
+    @Override
+    public boolean isAnswerCorrect(int i) {
+        return answers.get(i).isCorrect();
+    }
 
     public String getTitle() {
         return title;
@@ -74,4 +78,5 @@ public class QuizQuestion implements IQuizQuestion {
             return questionToBuild;
         }
     }
+
 }

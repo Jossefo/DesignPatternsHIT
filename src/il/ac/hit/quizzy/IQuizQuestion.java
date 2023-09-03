@@ -9,4 +9,6 @@ public interface IQuizQuestion {
     CharSequence getTitle();
 
     CharSequence getQuestion();
+
+    boolean isAnswerCorrect(int i);
 }
