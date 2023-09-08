@@ -8,7 +8,7 @@ public interface IQuizQuestion {
 
     CharSequence getTitle();
 
-    CharSequence getQuestion();
+    String getQuestion();
 
     boolean isAnswerCorrect(int i);
 }

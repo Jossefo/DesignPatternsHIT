@@ -45,12 +45,13 @@ public class SimpleCSVQuizFilesDAO implements IQuizFilesDAO {
                 throw new QuizException("Invalid quiz file format");
             }
 
-            IQuiz quiz = new TerminalQuiz(); // You can create the appropriate quiz type here
+            IQuiz quiz = new GUIQuiz(); // Instantiate the appropriate quiz type (e.g., GUIQuiz or TerminalQuiz)
             quiz.setName(quizName);
 
             String line;
             while ((line = reader.readLine()) != null) {
-                quiz.addQuestion(stringToQuestion(line));
+                IQuizQuestion question = stringToQuestion(line);
+                quiz.addQuestion(question);
             }
 
             return quiz;
@@ -58,6 +59,27 @@ public class SimpleCSVQuizFilesDAO implements IQuizFilesDAO {
             throw new QuizException("Error while loading quiz from file: " + e.getMessage(), e);
         }
     }
+
+//    public IQuiz loadQuizFromFile(String fileName) throws QuizException {
+//        try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
+//            String quizName = reader.readLine();
+//            if (quizName == null || quizName.isEmpty()) {
+//                throw new QuizException("Invalid quiz file format");
+//            }
+//
+//            IQuiz quiz = new TerminalQuiz(); // You can create the appropriate quiz type here
+//            quiz.setName(quizName);
+//
+//            String line;
+//            while ((line = reader.readLine()) != null) {
+//                quiz.addQuestion(stringToQuestion(line));
+//            }
+//
+//            return quiz;
+//        } catch (IOException e) {
+//            throw new QuizException("Error while loading quiz from file: " + e.getMessage(), e);
+//        }
+//    }
 
     // Helper method to convert a question to a CSV string
     private String questionToString(IQuizQuestion question) {
@@ -74,15 +96,36 @@ public class SimpleCSVQuizFilesDAO implements IQuizFilesDAO {
     }
 
     // Helper method to convert a CSV string to a question
+//    private IQuizQuestion stringToQuestion(String csv) {
+//        String[] parts = csv.split(",");
+//        if (parts.length < 3 || (parts.length - 1) % 2 != 0) {
+//            throw new IllegalArgumentException("Invalid CSV format");
+//        }
+//
+//        IQuizQuestionBuilder builder = new QuizQuestion.Builder()
+//                .setTitle(parts[0])
+//                .setQuestion(parts[1]);
+//
+//        for (int i = 2; i < parts.length; i += 2) {
+//            builder.addAnswer(parts[i], Boolean.parseBoolean(parts[i + 1]));
+//        }
+//
+//        return builder.create();
+//    }
+
     private IQuizQuestion stringToQuestion(String csv) {
         String[] parts = csv.split(",");
-        if (parts.length < 3 || (parts.length - 1) % 2 != 0) {
-            throw new IllegalArgumentException("Invalid CSV format");
+        for (String part:parts){
+            System.out.println(part.toString());
         }
 
-        IQuizQuestionBuilder builder = new QuizQuestion.Builder()
-                .setTitle(parts[0])
-                .setQuestion(parts[1]);
+        if (parts.length < 3 || (parts.length) % 2 != 0) {
+            throw new IllegalArgumentException("Invalid CSV maks format");
+        }
+
+        IQuizQuestionBuilder builder = new QuizQuestion.Builder(); // Instantiate the appropriate builder
+        builder.setTitle(parts[0]);
+        builder.setQuestion(parts[1]);
 
         for (int i = 2; i < parts.length; i += 2) {
             builder.addAnswer(parts[i], Boolean.parseBoolean(parts[i + 1]));
@@ -90,4 +133,31 @@ public class SimpleCSVQuizFilesDAO implements IQuizFilesDAO {
 
         return builder.create();
     }
+//    private IQuizQuestion stringToQuestion(String csv) {
+//        String[] parts = csv.split(",");
+//        if (parts.length < 3 || (parts.length - 1) % 2 != 0) {
+//            throw new IllegalArgumentException("Invalid CSV format");
+//        }
+//
+//        // Extract the title and question from the parts array
+//        String title = parts[0];
+//        String question = parts[1];
+//
+//        // Create a builder for the quiz question
+//        IQuizQuestionBuilder builder = new QuizQuestion.Builder()
+//                .setTitle(title)
+//                .setQuestion(question);
+//
+//        // Parse the answers and correctness values
+//        for (int i = 2; i < parts.length; i += 2) {
+//            String answerText = parts[i];
+//            boolean isCorrect = Boolean.parseBoolean(parts[i + 1]);
+//            builder.addAnswer(answerText, isCorrect);
+//        }
+//
+//        // Create the quiz question
+//        return builder.create();
+//    }
+
+
 }

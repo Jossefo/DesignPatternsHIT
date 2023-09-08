@@ -10,6 +10,10 @@ public class TerminalQuiz extends UIQuiz implements IQuiz {
     private List<IQuizQuestion> questions = new ArrayList<>();
     private int score = 0;
 
+    @Override
+    public List<IQuizQuestion> getQuestions() {
+        return questions;
+    }
 
     public TerminalQuiz() {
         this.quizType = QuizType.TERMINAL;
@@ -66,7 +70,7 @@ public class TerminalQuiz extends UIQuiz implements IQuiz {
                     user_answer = scanner.nextInt();
                     scanner.nextLine();
 
-                    if (question.isAnswerIndexCorrect(user_answer)) {
+                    if (question.isAnswerCorrect(user_answer-1)) {
                         valid_choose = true;
                     } else {
                         System.out.println("Answer out of range");
@@ -102,22 +106,21 @@ public class TerminalQuiz extends UIQuiz implements IQuiz {
     }
 
     @Override
-    public String ToString() {
+    public String toString() {
         return "TerminalQuiz{" + "name='" + name + '\'' + ", questions=" + questions + ", score=" + score + '}';
     }
 
     private void printAnswers(IQuizQuestion question) {
         int answerIndex = 1;
-        for (QuizQuestion.Answer answer : question.getAnswers()) {
-            System.out.println(answerIndex + ". " + answer.getText());
+        for (IQuizAnswer answer : question.getAnswers()) {
+            System.out.println(answerIndex + ". " + answer.getAnswer());
             answerIndex++;
         }
 
     }
     @Override
-    public IQuiz clone() throws CloneNotSupportedException {
+    public IQuiz clone() {
         TerminalQuiz clonedQuiz = (TerminalQuiz) super.clone();
-        // Выполните клонирование для всех неизменяемых полей, если такие есть
         clonedQuiz.questions = new ArrayList<>(this.questions);
         return clonedQuiz;
     }
