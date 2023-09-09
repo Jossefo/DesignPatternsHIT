@@ -43,12 +43,19 @@ To use the Quizzy Library, you can follow these steps:
 
 
 Create an instance of the QuizFactory.
+
 Use the factory to create a new IQuiz object based on the desired QuizType.
+
 Set the name of the quiz using setName(String text).
+
 Create and configure multiple-choice questions using the QuizQuestion.Builder class.
+
 Add the questions to the quiz using addQuestion(IQuizQuestion question).
+
 Save the quiz to a file using the IQuizFilesDAO interface.
+
 Load the quiz from a file using the IQuizFilesDAO interface.
+
 Start the quiz using the start() method.
 ---
 ***By :***
