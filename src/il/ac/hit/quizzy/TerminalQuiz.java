@@ -124,4 +124,9 @@ public class TerminalQuiz extends UIQuiz implements IQuiz {
         clonedQuiz.questions = new ArrayList<>(this.questions);
         return clonedQuiz;
     }
+
+    @Override
+    public QuizType getType() {
+        return this.quizType;
+    }
 }

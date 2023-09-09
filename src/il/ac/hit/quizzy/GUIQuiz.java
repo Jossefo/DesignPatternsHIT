@@ -95,8 +95,8 @@ public class GUIQuiz extends UIQuiz implements IQuiz {
     private void initComponent() {
         frame.setLayout(new BorderLayout());
         frame.add(question_label, BorderLayout.NORTH);
+        frame.add(answer_panel, BorderLayout.CENTER);
         frame.add(check_buttom, BorderLayout.SOUTH);
-        frame.add(score_label, BorderLayout.CENTER);
         frame.add(score_label, BorderLayout.EAST);
         frame.setSize(1000, 1000);
 
@@ -141,6 +141,8 @@ public class GUIQuiz extends UIQuiz implements IQuiz {
         for (IQuizAnswer answer : curr_question.getAnswers()) {
             JRadioButton radioButton = new JRadioButton(answer.getAnswer());
             button_group.add(radioButton);
+            answer_panel.add(radioButton);
+
 
             radioButton.addActionListener(new ActionListener() {
                 @Override
@@ -151,25 +153,40 @@ public class GUIQuiz extends UIQuiz implements IQuiz {
         }
     }
 
+
     public void checkAnswer() {
         if (select_buttom != null) {
             IQuizQuestion question = questions.get(curr_question_idx - 1);
             Component[] components = answer_panel.getComponents();
+            boolean isAnswerCorrect = false;
 
             for (int i = 0; i < components.length; i++) {
-                if (question.isAnswerCorrect(i)) {
-                    setScore(getScore());
-                    score_label.setText("Score --> " + getScore());
+                if (components[i] instanceof JRadioButton) {
+                    JRadioButton radioButton = (JRadioButton) components[i];
+                    if (radioButton.isSelected() && question.isAnswerCorrect(i)) {
+                        isAnswerCorrect = true;
+                        break; // Exit the loop if a correct answer is found
+                    }
                 }
-                break;
+            }
+
+
+            if (isAnswerCorrect) {
+                setScore(getScore() + 1);
+                score_label.setText("Score --> " + getScore());
             }
         }
         select_buttom = null;
     }
+
 
     private void showResults() {
         JOptionPane.showMessageDialog(frame, "Quiz Done , Score --> " + getScore() + " --- ");
         frame.dispose();
     }
 
+    @Override
+    public QuizType getType() {
+        return this.quizType;
+    }
 }

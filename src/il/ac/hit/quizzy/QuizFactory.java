@@ -4,9 +4,10 @@ public class QuizFactory {
     private IQuiz guiQuizPrototype;
 
     public QuizFactory() {
-        // Initialize the prototypes for TerminalQuiz and GUIQuiz
-        terminalQuizPrototype = new TerminalQuiz();
+        // Initialize prototypes for Terminal/GUI
         guiQuizPrototype = new GUIQuiz();
+        terminalQuizPrototype = new TerminalQuiz();
+
     }
 
     public IQuiz createQuiz(QuizType type) {
@@ -20,7 +21,7 @@ public class QuizFactory {
     }
 
     private IQuiz cloneQuiz(IQuiz quizPrototype) {
-        // Create a new instance of the specified quiz type using the clone method
+        // Create a new instance
         try {
             return (IQuiz) quizPrototype.clone();
         } catch (CloneNotSupportedException e) {

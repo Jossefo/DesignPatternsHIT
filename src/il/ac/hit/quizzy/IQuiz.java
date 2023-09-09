@@ -8,6 +8,6 @@ public interface IQuiz extends Cloneable {
     String getName();
     void addQuestion(IQuizQuestion question);
     List<IQuizQuestion> getQuestions();
-
+    QuizType getType();
     IQuiz clone() throws CloneNotSupportedException;
 }

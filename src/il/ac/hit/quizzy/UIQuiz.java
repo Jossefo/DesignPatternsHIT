@@ -13,4 +13,5 @@ public abstract class UIQuiz implements IQuiz, Cloneable {
         }
         return (IQuiz) clone;
     }
+
 }
