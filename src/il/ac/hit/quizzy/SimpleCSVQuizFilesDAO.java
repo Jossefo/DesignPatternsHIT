@@ -45,7 +45,7 @@ public class SimpleCSVQuizFilesDAO implements IQuizFilesDAO {
                 throw new QuizException("Invalid quiz file format");
             }
 
-            IQuiz quiz = new GUIQuiz(); // Instantiate the appropriate quiz type (e.g., GUIQuiz or TerminalQuiz)
+            IQuiz quiz = new TerminalQuiz(); // Instantiate the appropriate quiz type (e.g., GUIQuiz or TerminalQuiz)
             quiz.setName(quizName);
 
             String line;
@@ -115,9 +115,10 @@ public class SimpleCSVQuizFilesDAO implements IQuizFilesDAO {
 
     private IQuizQuestion stringToQuestion(String csv) {
         String[] parts = csv.split(",");
-        for (String part:parts){
-            System.out.println(part.toString());
-        }
+//        //print for test
+//        for (String part:parts){
+//            System.out.println(part.toString());
+//        }
 
         if (parts.length < 3 || (parts.length) % 2 != 0) {
             throw new IllegalArgumentException("Invalid CSV maks format");
